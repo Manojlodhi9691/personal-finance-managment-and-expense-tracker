@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>Smart Healthcare Monitoring System</title>
+
+    <style>
+
+        body {
+
+            margin: 0;
+
+            font-family: Arial;
+
+            background: #f2f6fa;
+
+        }
+
+        header {
+
+            background: #1769aa;
+
+            color: white;
+
+            padding: 25px;
+
+            text-align: center;
+
+        }
+
+        header h1 {
+
+            margin: 0;
+
+        }
+
+        .container {
+
+            width: 90%;
+
+            margin: 25px auto;
+
+        }
+
+        .cards {
+
+            display: grid;
+
+            grid-template-columns: repeat(4, 1fr);
+
+            gap: 20px;
+
+        }
+
+        .card {
+
+            background: white;
+
+            padding: 20px;
+
+            text-align: center;
+
+            border-radius: 12px;
+
+            box-shadow: 0 3px 10px #ccc;
+
+        }
+
+        .card h3 {
+
+            color: #555;
+
+        }
+
+        .card p {
+
+            font-size: 25px;
+
+            font-weight: bold;
+
+            color: #1769aa;
+
+        }
+
+        .section {
+
+            background: white;
+
+            margin-top: 25px;
+
+            padding: 25px;
+
+            border-radius: 12px;
+
+            box-shadow: 0 3px 10px #ccc;
+
+        }
+
+        .form {
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 15px;
+
+        }
+
+        input {
+
+            padding: 12px;
+
+            border: 1px solid #ccc;
+
+            border-radius: 6px;
+
+            width: 90%;
+
+        }
+
+        button {
+
+            margin-top: 20px;
+
+            padding: 13px;
+
+            background: #1769aa;
+
+            color: white;
+
+            border: none;
+
+            border-radius: 7px;
+
+            font-size: 16px;
+
+            cursor: pointer;
+
+        }
+
+        #result {
+
+            margin-top: 20px;
+
+            padding: 20px;
+
+            border-radius: 8px;
+
+            font-size: 18px;
+
+        }
+
+        .safe {
+
+            background: #d9f7df;
+
+            color: green;
+
+        }
+
+        .risk {
+
+            background: #ffdcdc;
+
+            color: red;
+
+        }
+
+        @media(max-width:700px) {
+
+            .cards {
+
+                grid-template-columns: 1fr 1fr;
+
+            }
+
+            .form {
+
+                grid-template-columns: 1fr;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<header>
+
+    <h1>Smart Healthcare Monitoring System</h1>
+
+    <p>Using Machine Learning</p>
+
+</header>
+
+<div class="container">
+
+    <!-- Dashboard -->
+
+    <div class="cards">
+
+        <div class="card">
+
+            <h3>❤️ Heart Rate</h3>
+
+            <p id="heartDisplay">-- bpm</p>
+
+        </div>
+
+        <div class="card">
+
+            <h3>🩸 Blood Pressure</h3>
+
+            <p id="bpDisplay">--/--</p>
+
+        </div>
+
+        <div class="card">
+
+            <h3>🫁 SpO₂</h3>
+
+            <p id="spoDisplay">-- %</p>
+
+        </div>
+
+        <div class="card">
+
+            <h3>🌡 Temperature</h3>
+
+            <p id="tempDisplay">-- °C</p>
+
+        </div>
+
+    </div>
+
+    <!-- Patient Input -->
+
+    <div class="section">
+
+        <h2>Patient Health Parameters</h2>
+
+        <div class="form">
+
+            <div>
+
+                <label>Age</label><br><br>
+
+                <input type="number" id="age" value="21">
+
+            </div>
+
+            <div>
+
+                <label>Heart Rate</label><br><br>
+
+                <input type="number" id="heart" value="78">
+
+            </div>
+
+            <div>
+
+                <label>Systolic BP</label><br><br>
+
+                <input type="number" id="sys" value="120">
+
+            </div>
+
+            <div>
+
+                <label>Diastolic BP</label><br><br>
+
+                <input type="number" id="dia" value="80">
+
+            </div>
+
+            <div>
+
+                <label>Blood Glucose</label><br><br>
+
+                <input type="number" id="glucose" value="95">
+
+            </div>
+
+            <div>
+
+                <label>SpO₂</label><br><br>
+
+                <input type="number" id="spo" value="98">
+
+            </div>
+
+            <div>
+
+                <label>Temperature</label><br><br>
+
+                <input type="number" step="0.1" id="temperature" value="36.7">
+
+            </div>
+
+        </div>
+
+        <button onclick="analyze()">Analyze Health Data</button>
+
+        <div id="result">
+
+            Enter patient details and click Analyze.
+
+        </div>
+
+    </div>
+
+    <!-- Information -->
+
+    <div class="section">
+
+        <h2>System Workflow</h2>
+
+        <p>
+
+            Patient Data → Data Processing → Machine Learning
+
+            → Risk Prediction → Dashboard
+
+        </p>
+
+        <h3>Machine Learning Parameters</h3>
+
+        <ul>
+
+            <li>Age</li>
+
+            <li>Heart Rate</li>
+
+            <li>Blood Pressure</li>
+
+            <li>Blood Glucose</li>
+
+            <li>SpO₂</li>
+
+            <li>Body Temperature</li>
+
+        </ul>
+
+    </div>
+
+</div>
+
+<script>
+
+function analyze() {
+
+    let age = Number(document.getElementById("age").value);
+
+    let heart = Number(document.getElementById("heart").value);
+
+    let sys = Number(document.getElementById("sys").value);
+
+    let dia = Number(document.getElementById("dia").value);
+
+    let glucose = Number(document.getElementById("glucose").value);
+
+    let spo = Number(document.getElementById("spo").value);
+
+    let temp = Number(document.getElementById("temperature").value);
+
+    // Dashboard update
+
+    document.getElementById("heartDisplay").innerText =
+
+        heart + " bpm";
+
+    document.getElementById("bpDisplay").innerText =
+
+        sys + "/" + dia;
+
+    document.getElementById("spoDisplay").innerText =
+
+        spo + " %";
+
+    document.getElementById("tempDisplay").innerText =
+
+        temp + " °C";
+
+    // Simple ML-style risk calculation
+
+    let score = 0;
+
+    if (age > 55)
+
+        score++;
+
+    if (heart > 100)
+
+        score++;
+
+    if (sys > 140 || dia > 90)
+
+        score++;
+
+    if (glucose > 140)
+
+        score++;
+
+    if (spo < 94)
+
+        score++;
+
+    if (temp > 38)
+
+        score++;
+
+    let result = document.getElementById("result");
+
+    if (score >= 3) {
+
+        result.className = "risk";
+
+        result.innerHTML =
+
+            "<b>⚠ Higher Risk Pattern Detected</b><br>" +
+
+            "Risk Score: " + score + "/6";
+
+    }
+
+    else {
+
+        result.className = "safe";
+
+        result.innerHTML =
+
+            "<b>✓ Lower Risk Pattern</b><br>" +
+
+            "Risk Score: " + score + "/6";
+
+    }
+
+}
+
+</script>
+
+</body>
+
+</html>
