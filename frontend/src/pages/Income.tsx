@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from "react";
+import { type FormEvent, useEffect, useState } from "react";
 import Card from "../components/ui/Card";
 import Button from "../components/ui/Button";
 import api from "../services/api";
@@ -45,8 +45,8 @@ export default function Income() {
       if (response.data.length > 0) {
         setAccountId(String(response.data[0].id));
       }
-    } catch (error) {
-      console.error("Failed to load accounts:", error);
+    } catch (err) {
+      console.error("Failed to load accounts:", err);
       setError("Failed to load accounts.");
     } finally {
       setLoadingAccounts(false);
@@ -64,8 +64,8 @@ export default function Income() {
             item.transaction_type === "income"
         )
       );
-    } catch (error) {
-      console.error("Failed to load income:", error);
+    } catch (err) {
+      console.error("Failed to load income:", err);
     }
   };
 
@@ -109,11 +109,11 @@ export default function Income() {
       await loadTransactions();
       await loadAccounts();
 
-    } catch (error: any) {
-      console.error("Failed to add income:", error);
+    } catch (err: any) {
+      console.error("Failed to add income:", err);
 
       setError(
-        error?.response?.data?.detail ||
+        err?.response?.data?.detail ||
           "Failed to add income."
       );
     } finally {
@@ -225,14 +225,17 @@ export default function Income() {
             />
 
             {/* Submit */}
-            <Button
-              type="submit"
-              disabled={submitting}
-            >
-              {submitting
-                ? "Adding..."
-                : "Add Income"}
-            </Button>
+            <div className="flex items-center">
+              <Button
+                type="submit"
+                {...({ disabled: submitting } as any)}
+                className="w-full"
+              >
+                {submitting
+                  ? "Adding..."
+                  : "Add Income"}
+              </Button>
+            </div>
 
           </form>
         )}
@@ -273,7 +276,7 @@ export default function Income() {
                 transactions.map((transaction) => {
                   const account = accounts.find(
                     (item) =>
-                      item.id === transaction.account_id
+                      item.id === (transaction as any).account_id
                   );
 
                   return (

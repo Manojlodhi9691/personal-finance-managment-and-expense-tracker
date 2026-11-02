@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from "react";
+import { type FormEvent, useEffect, useState } from "react";
 import Card from "../components/ui/Card";
 import Button from "../components/ui/Button";
 import api from "../services/api";
@@ -48,8 +48,8 @@ export default function Expenses() {
       if (response.data.length > 0) {
         setAccountId(String(response.data[0].id));
       }
-    } catch (error) {
-      console.error("Failed to load accounts:", error);
+    } catch (err) {
+      console.error("Failed to load accounts:", err);
       setError("Failed to load accounts.");
     } finally {
       setLoadingAccounts(false);
@@ -67,8 +67,8 @@ export default function Expenses() {
             item.transaction_type === "expense"
         )
       );
-    } catch (error) {
-      console.error("Failed to load transactions:", error);
+    } catch (err) {
+      console.error("Failed to load transactions:", err);
     }
   };
 
@@ -110,11 +110,11 @@ export default function Expenses() {
 
       // Reload expenses
       await loadTransactions();
-    } catch (error: any) {
-      console.error("Failed to add expense:", error);
+    } catch (err: any) {
+      console.error("Failed to add expense:", err);
 
       const message =
-        error?.response?.data?.detail ||
+        err?.response?.data?.detail ||
         "Failed to add expense.";
 
       setError(message);
@@ -128,7 +128,6 @@ export default function Expenses() {
       {/* Page heading */}
       <div>
         <h1 className="text-3xl font-bold">Expenses</h1>
-
         <p className="text-slate-500">
           Track where your money goes.
         </p>
@@ -222,14 +221,17 @@ export default function Expenses() {
             />
 
             {/* Button */}
-            <Button
-              type="submit"
-              disabled={submitting}
-            >
-              {submitting
-                ? "Adding..."
-                : "Add Expense"}
-            </Button>
+            <div className="flex items-center">
+              <Button
+                type="submit"
+                {...({ disabled: submitting } as any)}
+                className="w-full"
+              >
+                {submitting
+                  ? "Adding..."
+                  : "Add Expense"}
+              </Button>
+            </div>
           </form>
         )}
       </Card>
@@ -268,7 +270,7 @@ export default function Expenses() {
                 transactions.map((transaction) => {
                   const account = accounts.find(
                     (item) =>
-                      item.id === transaction.account_id
+                      item.id === (transaction as any).account_id
                   );
 
                   return (
