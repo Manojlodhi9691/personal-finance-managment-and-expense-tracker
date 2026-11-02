@@ -23,8 +23,8 @@ export default function Budgets() {
     try {
       const response = await api.get("/budgets/");
       setBudgets(response.data);
-    } catch (error) {
-      console.error("Failed to load budgets:", error);
+    } catch (err) {
+      console.error("Failed to load budgets:", err);
     }
   };
 
@@ -44,8 +44,8 @@ export default function Budgets() {
       setAmount("");
 
       fetchBudgets();
-    } catch (error) {
-      console.error("Failed to create budget:", error);
+    } catch (err) {
+      console.error("Failed to create budget:", err);
       alert("Failed to create budget");
     }
   };
@@ -55,8 +55,8 @@ export default function Budgets() {
       await api.delete(`/budgets/${id}`);
 
       fetchBudgets();
-    } catch (error) {
-      console.error("Failed to delete budget:", error);
+    } catch (err) {
+      console.error("Failed to delete budget:", err);
     }
   };
 

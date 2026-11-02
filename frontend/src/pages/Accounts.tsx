@@ -26,8 +26,8 @@ export default function Accounts() {
     try {
       const response = await api.get("/accounts/");
       setAccounts(response.data);
-    } catch (error) {
-      console.error("Failed to load accounts:", error);
+    } catch (err) {
+      console.error("Failed to load accounts:", err);
       setError("Failed to load accounts.");
     } finally {
       setLoading(false);
@@ -58,11 +58,11 @@ export default function Accounts() {
 
       // Reload accounts
       await loadAccounts();
-    } catch (error: any) {
-      console.error("Failed to create account:", error);
+    } catch (err: any) {
+      console.error("Failed to create account:", err);
 
       setError(
-        error?.response?.data?.detail ||
+        err?.response?.data?.detail ||
           "Failed to create account."
       );
     }
@@ -73,11 +73,11 @@ export default function Accounts() {
     try {
       await api.delete(`/accounts/${id}`);
       await loadAccounts();
-    } catch (error: any) {
-      console.error("Failed to delete account:", error);
+    } catch (err: any) {
+      console.error("Failed to delete account:", err);
 
       setError(
-        error?.response?.data?.detail ||
+        err?.response?.data?.detail ||
           "Failed to delete account."
       );
     }

@@ -36,8 +36,8 @@ export default function Dashboard() {
       .then((response) => {
         setTransactions(response.data);
       })
-      .catch((error) => {
-        console.error("Failed to load transactions:", error);
+      .catch((err) => {
+        console.error("Failed to load transactions:", err);
       });
 
     // Get expense forecast
@@ -46,8 +46,8 @@ export default function Dashboard() {
       .then((response) => {
         setForecast(response.data);
       })
-      .catch((error) => {
-        console.error("Failed to load forecast:", error);
+      .catch((err) => {
+        console.error("Failed to load forecast:", err);
       });
   }, []);
 
